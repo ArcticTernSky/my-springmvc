@@ -45,7 +45,7 @@ public class AnnotationHandleServlet extends HttpServlet {
         return lastUrl;
     }
 
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
 
@@ -53,7 +53,7 @@ public class AnnotationHandleServlet extends HttpServlet {
         System.out.println("AnnotationHandlerServlet-->doGet....");
         this.excute(request, response);
     }
-
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("AnnotationHandlerServlet-->doPost....");
@@ -81,7 +81,6 @@ public class AnnotationHandleServlet extends HttpServlet {
         //遍历所有方法,找出url与RequestMapping注解的value值相匹配的方法
         Method method = null;
         for (Method m : methods) {
-
             if (m.isAnnotationPresent(RequestMapping.class)) {
                 String value = m.getAnnotation(RequestMapping.class).value();
                 if (value != null && !"".equals(value.trim()) && requestUrl.equals(value.trim())) {
@@ -89,9 +88,7 @@ public class AnnotationHandleServlet extends HttpServlet {
                     method = m;
                     break;
                 }
-
             }
-
         }
 
         //6.执行url对应的方法,处理用户请求
@@ -121,11 +118,7 @@ public class AnnotationHandleServlet extends HttpServlet {
                     request.getRequestDispatcher(view.getUrl()).forward(request, response);
                 }
             }
-
-
         }
-
-
     }
 
     @Override
